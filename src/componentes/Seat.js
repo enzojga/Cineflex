@@ -7,14 +7,20 @@ export default function Seat(props){
     const [color, setColor] = useState((props.isAvailable)? '#C3CFD9': '#FBE192');
     function reservaAssento(){
         if(props.isAvailable === false){
+            alert('Esse assento não está disponível');
             return;
         }
         if(placeClicked === true){
+            props.setSelected(props.selected.filter((place) => place.name));
+            props.setSeatName(props.selected.filter((place) => place.name));
+            setPlaceClicked(false);
+            setColor('#C3CFD9')
             return;
         }
         setPlaceClicked(true);
-        props.setSelected([...props.selected,props.id])
-        setColor('#1AAE9E')
+        props.setSelected([...props.selected,props.id]);
+        props.setSeatName([...props.seatName,props.name]);
+        setColor('#8DD7CF');
     }
     
 

@@ -7,25 +7,24 @@ import { useParams } from 'react-router-dom';
 export default function MovieSchedules(){
 
     const [times,setTimes] = useState([]);
-    const [teste, setTest] = useState([]);
+    const [movieData, setMovieData] = useState([]);
     const {movieId} = useParams();
     useEffect(() =>{
         const promisse = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/movies/${movieId}/showtimes`);
         promisse.then((p) =>{
             setTimes(...times, p.data.days);
-            setTest(...teste, p.data);
+            setMovieData(...movieData, p.data);
         })
     },[]);
-    console.log(teste);
     return(
         <Content>
             <h1>Selecione o horário</h1>
-            {times.map((day) => <Time id = {day.id} date = {day.date} showtimes = {day.showtimes} weekday = {day.weekday} />)}
+            {times.map((day,index) => <Time key={index} id = {day.id} date = {day.date} showtimes = {day.showtimes} weekday = {day.weekday} />)}
             <Footer>
                 <MovieBaner>
-                    <img src={teste.posterURL}/>
+                    <img src={movieData.posterURL}/>
                 </MovieBaner>
-                <h1>{teste.title}</h1>
+                <h1>{movieData.title}</h1>
             </Footer>
         </Content>
     )

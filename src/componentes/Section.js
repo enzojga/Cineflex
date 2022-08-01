@@ -1,8 +1,9 @@
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate  } from 'react-router-dom';
 import { useEffect,useState } from 'react';
 import Seat from './Seat';
 import axios from 'axios';
 import styled from 'styled-components';
+let newObj;
 
 export default function Section(){
 
@@ -12,8 +13,8 @@ export default function Section(){
     const [seats, setSeats] = useState([]);
     const [day,setDay] = useState([]);
     const [selected,setSelected] = useState([]);
-    console.log(selected);
-
+    const [seatName,setSeatName] = useState([]);
+    const navigate = useNavigate();
     useEffect(() =>{
         const getPromisse = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${sectionId}/seats`);
         getPromisse.then((p)=>{
@@ -22,16 +23,32 @@ export default function Section(){
             setDay(...day,p.data.day);
             setSeats(...seats,p.data.seats);
         }); 
-    },[])
+    },[]);
 
-    console.log(day);
+    function postObj(e){
+        e.preventDefault();
+        const obj = {
+            ids: selected,
+            name: e.target[0].value,
+            cpf: e.target[1].value       
+        }
+        const postPromisse = axios.post('https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many',obj);
+        newObj ={movieTitle: movie.title,
+            date: day.date ,
+            time: section.name,
+            seatName: seatName,
+            name: obj.name,
+            cpf: obj.cpf};
+        postPromisse.then((p)=>{navigate("/success",{state:newObj})});
+    }
+
 
     return(
         <Content>
             <h1>Selecione o(s) assento(s)</h1>
             <SeatsList>
 
-                {seats.map((s) =>  <Seat id={s.id} name={s.name} isAvailable={s.isAvailable} setSelected={setSelected} selected={selected}/>)}
+                {seats.map((s,index) =>  <Seat key={index} id={s.id} name={s.name} isAvailable={s.isAvailable} setSelected={setSelected} selected={selected} setSeatName={setSeatName} seatName={seatName}/>)}
 
                 <Exemples>
                     <Exemple>
@@ -51,14 +68,22 @@ export default function Section(){
 
                 </Exemples>
             </SeatsList>
-            
+
+            <Form onSubmit={postObj}>
+                <label htmlFor="buyerName" >Nome do comprador:</label>
+                <input type="text" id="buyerName" placeholder='Digite seu nome...' required/>
+                <label htmlFor="campoCpf">CPF do comprador:</label>
+                <input type="number" id="buyerCpf" placeholder='Digite seu CPF...' required/>
+                <button type="submit">Reservar assento(s)</button>
+            </Form>
+
             <Footer>
                 <MovieBaner>
                     <img src={movie.posterURL}/>
                 </MovieBaner>
                 <div>
                     <h1>{movie.title}</h1>
-                    <h1>{day.date}-{day.weekday}</h1>
+                    <h1>{section.name} - {day.weekday}</h1>
                 </div>
             </Footer>
         </Content>
@@ -111,13 +136,13 @@ const Content = styled.div`
   align-items: center;
   flex-direction: column;
   margin-bottom: 177px;
+  margin-top: 30px;
 
   h1{
     font-weight: 400;
     font-size: 24px;
     line-height: 28px;
     color: #293845;
-    margin: 30px 0 30px 0;
   }
 `
 const SeatsList = styled.div`
@@ -154,3 +179,39 @@ const SeatStyle = styled.div`
     justify-content: center;
     font-size: 11px;
 `
+const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+    label{
+        font-weight: 400;
+        font-size: 18px;
+        margin-top: 7px;
+    }
+    input{
+        width: 327px;
+        height: 51px;
+        background: #FFFFFF;
+        border: 1px solid #D5D5D5;
+        border-radius: 3px;
+        ::placeholder{
+        font-weight: 400;
+        font-size: 18px;
+        font-style: italic;
+    }
+    }
+
+    button{
+        width: 225px;
+        height: 42px;
+        background: #E8833A;
+        border-radius: 3px;
+        border-style: none;
+        color: white;
+        font-size: 18px;
+        justify-self: center;
+        align-self: center;
+        margin-top: 60px;
+
+    }
+` 

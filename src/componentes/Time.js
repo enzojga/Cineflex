@@ -2,12 +2,11 @@ import styled from "styled-components"
 import { Link } from "react-router-dom"
 
 export default function Time(props){
-    console.log(props.id)
     return (
         <Schedule>
             <Day>{props.weekday} - {props.date}</Day>
             <Hours>
-                {props.showtimes.map((hour) => <Link to={`/section/${hour.id}`}><Hour id = {hour.id}>{hour.name}</Hour></Link>)}
+                {props.showtimes.map((hour,index) => <Link key={index} to={`/section/${hour.id}`}><Hour id = {hour.id} Styled={{textDecoration :'none'}} > <p>{hour.name}</p> </Hour></Link>)}
             </Hours>
         </Schedule>
     )
@@ -15,9 +14,11 @@ export default function Time(props){
 
 const Schedule = styled.div`
     display: flex;
+    text-decoration: none;
     flex-direction: column;
     width: 100%;
     margin: 0 0 23px 23px
+    
 `
 
 const Day = styled.p`
@@ -29,6 +30,10 @@ const Day = styled.p`
 const Hours = styled.div`
     display:flex ;
     width: 100%;
+    text-decoration: none;
+    p{
+        text-decoration: none;
+    }
 `
 const Hour = styled.div`
     width: 83px;
@@ -38,9 +43,13 @@ const Hour = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    font-style: none;
     color: white;
     font-weight: 400;
     font-size: 18px;
     line-height: 21px;
     margin: 22px 8px 0 0;
+    a{
+        text-decoration: none;
+    }
 `

@@ -3,6 +3,7 @@ import Movie from './Movie';
 import { useEffect,useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+
 export default function MainPage(){
 
     const [movies, setMovies] = useState([]);
@@ -10,12 +11,11 @@ export default function MainPage(){
       const getPromisse = axios.get('https://mock-api.driven.com.br/api/v7/cineflex/movies');
       getPromisse.then(p => {setMovies(p.data)});
     },[])
-    console.log(movies);
     return(
         <Content>
             <h1>Selecione o filme</h1> 
             <MovieList>
-              {movies.map((movies,index) => <Link to={`/movieschedules/${movies.id}`}><Movie key={index} img = {movies.posterURL} title = {movies.title} id = {movies.id} overview = {movies.overview} releaseDate = {movies.releaseDate}/></Link>)}
+              {movies.map((movies,index) => <Link key={index} to={`/movieschedules/${movies.id}`}><Movie img = {movies.posterURL} title = {movies.title} id = {movies.id} overview = {movies.overview} releaseDate = {movies.releaseDate}/></Link>)}
             </MovieList>
         </Content>
     )
