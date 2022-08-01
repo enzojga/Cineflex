@@ -15,9 +15,9 @@ export default function App(){
             <Menu/>
             <Routes>
                 <Route path="/" element={<MainPage />} />
-                <Route path="/movieschedules/:movieId" element={<MovieSchedules />} />
-                <Route path="/section/:sectionId" element={<Section/>} />
-                <Route path="/success/" element={<Success />} />
+                <Route path="/sessoes/:idFilme" element={<MovieSchedules />} />
+                <Route path="/assentos/:idSessao" element={<Section/>} />
+                <Route path="/sucesso" element={<Success />} />
             </Routes>
         </BrowserRouter>
     )

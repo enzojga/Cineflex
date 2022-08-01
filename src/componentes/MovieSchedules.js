@@ -8,9 +8,9 @@ export default function MovieSchedules(){
 
     const [times,setTimes] = useState([]);
     const [movieData, setMovieData] = useState([]);
-    const {movieId} = useParams();
+    const {idFilme} = useParams();
     useEffect(() =>{
-        const promisse = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/movies/${movieId}/showtimes`);
+        const promisse = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/movies/${idFilme}/showtimes`);
         promisse.then((p) =>{
             setTimes(...times, p.data.days);
             setMovieData(...movieData, p.data);

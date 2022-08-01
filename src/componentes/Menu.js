@@ -5,7 +5,7 @@ export default function Menu(){
     const navigate = useNavigate()
     return(
         <Header>
-            <ion-icon onClick={()=>{navigate('/')}} name="home-sharp" ></ion-icon>
+            <ion-icon onClick={()=>{navigate(-1)}} name="arrow-back-sharp" ></ion-icon>
             <h1>CINEFLEX</h1>
         </Header>
     )

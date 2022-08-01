@@ -6,7 +6,7 @@ export default function Time(props){
         <Schedule>
             <Day>{props.weekday} - {props.date}</Day>
             <Hours>
-                {props.showtimes.map((hour,index) => <Link key={index} to={`/section/${hour.id}`}><Hour id = {hour.id} Styled={{textDecoration :'none'}} > <p>{hour.name}</p> </Hour></Link>)}
+                {props.showtimes.map((hour,index) => <Link key={index} to={`/assentos/${hour.id}`}><Hour id = {hour.id} Styled={{textDecoration :'none'}} > <p>{hour.name}</p> </Hour></Link>)}
             </Hours>
         </Schedule>
     )

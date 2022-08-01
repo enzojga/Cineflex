@@ -7,7 +7,7 @@ let newObj;
 
 export default function Section(){
 
-    const {sectionId} = useParams();
+    const {idSessao} = useParams();
     const [section, setSection] = useState([]);
     const [movie, setMovie] = useState([]);
     const [seats, setSeats] = useState([]);
@@ -16,7 +16,7 @@ export default function Section(){
     const [seatName,setSeatName] = useState([]);
     const navigate = useNavigate();
     useEffect(() =>{
-        const getPromisse = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${sectionId}/seats`);
+        const getPromisse = axios.get(`https://mock-api.driven.com.br/api/v7/cineflex/showtimes/${idSessao}/seats`);
         getPromisse.then((p)=>{
             setSection(...section,p.data)
             setMovie(...movie,p.data.movie);
@@ -32,6 +32,11 @@ export default function Section(){
             name: e.target[0].value,
             cpf: e.target[1].value       
         }
+        if(selected.length === 0){
+            alert('Selecione pelo menos um assento');
+            return;
+        }
+
         const postPromisse = axios.post('https://mock-api.driven.com.br/api/v7/cineflex/seats/book-many',obj);
         newObj ={movieTitle: movie.title,
             date: day.date ,
@@ -39,7 +44,7 @@ export default function Section(){
             seatName: seatName,
             name: obj.name,
             cpf: obj.cpf};
-        postPromisse.then((p)=>{navigate("/success",{state:newObj})});
+        postPromisse.then((p)=>{navigate("/sucesso",{state:newObj})});
     }
 
 
@@ -52,7 +57,7 @@ export default function Section(){
 
                 <Exemples>
                     <Exemple>
-                        <SeatStyle color={'#1AAE9E'}></SeatStyle>
+                        <SeatStyle color={'#8DD7CF'}></SeatStyle>
                         <p>Selecionado</p>
                     </Exemple>
 

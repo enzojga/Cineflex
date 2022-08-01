@@ -15,7 +15,7 @@ export default function MainPage(){
         <Content>
             <h1>Selecione o filme</h1> 
             <MovieList>
-              {movies.map((movies,index) => <Link key={index} to={`/movieschedules/${movies.id}`}><Movie img = {movies.posterURL} title = {movies.title} id = {movies.id} overview = {movies.overview} releaseDate = {movies.releaseDate}/></Link>)}
+              {movies.map((movies,index) => <Link key={index} to={`/sessoes/${movies.id}`}><Movie img = {movies.posterURL} title = {movies.title} id = {movies.id} overview = {movies.overview} releaseDate = {movies.releaseDate}/></Link>)}
             </MovieList>
         </Content>
     )
